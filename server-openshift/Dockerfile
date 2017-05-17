@@ -1,6 +1,6 @@
 FROM jboss/keycloak:latest
 
-USER root
+USER v0c1977
 
 #Give correct permissions when used in an OpenShift environment.
 RUN chown -R jboss:0 $JBOSS_HOME/standalone && \
