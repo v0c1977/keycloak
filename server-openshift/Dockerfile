@@ -1,4 +1,4 @@
-FROM jboss/keycloak:latest
+FROM christiancarle/keycloak:latest
 
 USER root
 
