@@ -1,13 +1,9 @@
 FROM jboss/keycloak:latest
 
-ENV JBOSS_HOME /opt/jboss/keycloak
-  
 USER root
 
-RUN chgrp -R 0 /opt/jboss/keycloak \
-&& chmod -R g+rwX /opt/jboss/keycloak
-  
+#Give correct permissions when used in an OpenShift environment.
+RUN chown -R jboss:0 $JBOSS_HOME/standalone && \
+    chmod -R g+rw $JBOSS_HOME/standalone
+
 USER jboss
-#Enabling Proxy address forwarding so we can correctly handle SSL termination in front ends
-#such as an OpenShift Router or Apache Proxy
-RUN sed -i -e 's/<http-listener /& proxy-address-forwarding="${env.PROXY_ADDRESS_FORWARDING}" /' $JBOSS_HOME/standalone/configuration/standalone.xml
